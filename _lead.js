@@ -45,7 +45,7 @@
     if(h.indexOf('tel:')===0) return 'click_phone';
     if(/^https?:\/\/([a-z0-9-]+\.)*max\.ru\//.test(h)) return 'click_max';
     if(h.indexOf('tg:')===0||/^(https?:\/\/)?([a-z0-9-]+\.)?(t\.me|telegram\.me|telegram\.dog)\//.test(h)){
-      return /\https://catalystrussia.ru/catalyst_agency(\/|\?|#|$)/.test(h)?'':'click_telegram'; // канал = подписка, не обращение
+      return /\/catalyst_agency(\/|\?|#|$)/.test(h)?'':'click_telegram'; // канал = подписка, не обращение
     }
     return '';
   }
@@ -86,7 +86,7 @@
   } catch(e) {}
   var ref=document.referrer||'', external=false, host='';
   try { host=new URL(ref).hostname.toLowerCase(); external=!!host && host!==location.hostname && !/(^|\.)catalystrussia\.ru$/.test(host); } catch(e) {}
-  var paid=!!(currentUtms.yclid||currentUtms.gclid||/^(cpc|ppc|paid|paidsearch|display|cpm)$https://catalystrussia.ru/i.test(currentUtms.utm_medium||''));
+  var paid=!!(currentUtms.yclid||currentUtms.gclid||/^(cpc|ppc|paid|paidsearch|display|cpm)$/i.test(currentUtms.utm_medium||''));
   var channel=paid?'paid':currentUtms.utm_source?'campaign':external?(/(^|\.)(google\.[a-z.]+|yandex\.[a-z.]+|ya\.ru|bing\.com|duckduckgo\.com|search\.mail\.ru)$/.test(host)?'organic':'referral'):'direct';
   var touch={channel:channel,referrer:external?ref:'',landing:location.href,utm:currentUtms,at:new Date().toISOString()};
   if(!attrs.first) attrs.first=touch;
@@ -146,22 +146,22 @@
   }
   function visitText(){ return 'Здравствуйте! Хочу обсудить ивент. Код '+visitCode(); }
   // Личный Telegram → ссылка с черновиком. Канал, боты, приглашения и служебные пути не трогаем.
-  var TG_SKIP=/^(catalyst_agency|share|joinchat|addstickers|addemoji|addlist|addtheme|proxy|socks|login|iv|contact|boost|setlanguage|confirmphone|invoice|giftcode|auth|web|nft|auction|call)$https://catalystrussia.ru/i;
+  var TG_SKIP=/^(catalyst_agency|share|joinchat|addstickers|addemoji|addlist|addtheme|proxy|socks|login|iv|contact|boost|setlanguage|confirmphone|invoice|giftcode|auth|web|nft|auction|call)$/i;
   /* 27.10.2026: личный Telegram заменён ботом @catalyst_chat_bot. Метрика видела только нажатие, а кто
      реально написал и откуда пришёл, не знал никто. Бот получает токен визита (start=v<vt>), пересылает
      сообщение менеджерам, первое создаёт сделку с источником (api/chat-live.js). Откат: TG_BOT=''
      вернёт черновик с кодом в личный Telegram. */
   var TG_BOT='catalyst_chat_bot';
   function tgDraftHref(href,text){
-    var m=String(href||'').trim().match(/^(?:https?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me|telegram\.dog)\/([A-Za-z][A-Za-z0-9_]{3,31})\/?(?:\?([^#]*))?(?:#.*)?$https://catalystrussia.ru/i);
-    if(!m||TG_SKIP.test(m[1])||https://catalystrussia.ru/bot$/i.test(m[1])) return '';
+    var m=String(href||'').trim().match(/^(?:https?:\/\/)?(?:www\.)?(?:t\.me|telegram\.me|telegram\.dog)\/([A-Za-z][A-Za-z0-9_]{3,31})\/?(?:\?([^#]*))?(?:#.*)?$/i);
+    if(!m||TG_SKIP.test(m[1])||/bot$/i.test(m[1])) return '';
     if(TG_BOT) return 'https://t.me/'+TG_BOT+'?start=v'+visitToken();
-    var q=(m[2]||'').split('&').filter(function(p){ return p && !/^text(=|$)https://catalystrussia.ru/i.test(p); });
-    if(q.some(function(p){ return /^(start|startgroup|startapp|startchannel|direct|profile|voicechat|videochat|livestream)(=|$)https://catalystrussia.ru/i.test(p); })) return '';
+    var q=(m[2]||'').split('&').filter(function(p){ return p && !/^text(=|$)/i.test(p); });
+    if(q.some(function(p){ return /^(start|startgroup|startapp|startchannel|direct|profile|voicechat|videochat|livestream)(=|$)/i.test(p); })) return '';
     q.push('text='+encodeURIComponent(text));
     return 'https://t.me/'+m[1]+'?'+q.join('&');
   }
-  function isMaxUser(href){ return /^https?:\/\/(www\.)?max\.ru\https://catalystrussia.ru/u\/[A-Za-z0-9_-]{8,}/i.test(String(href||'').trim()); }
+  function isMaxUser(href){ return /^https?:\/\/(www\.)?max\.ru\/u\/[A-Za-z0-9_-]{8,}/i.test(String(href||'').trim()); }
   function sendVisitCode(messenger){
     var cookie=document.cookie.match(/(?:^|;\s*)_ym_uid=([^;]+)/);
     var cid=clientId||(cookie?cookie[1]:'');
@@ -202,7 +202,7 @@
       el.addEventListener('click',function(){ el.className=''; });
       document.body.appendChild(el);
     }
-    el.innerHTML=copied?'Код <b>'+code+'<https://catalystrussia.ru/b> скопирован,<span class="cc-vl"> вставьте в сообщение<https://catalystrussia.ru/span>':'Напишите в сообщении код <b>'+code+'<https://catalystrussia.ru/b>';
+    el.innerHTML=copied?'Код <b>'+code+'</b> скопирован,<span class="cc-vl"> вставьте в сообщение</span>':'Напишите в сообщении код <b>'+code+'</b>';
     void el.offsetWidth; el.className='on';
     clearTimeout(VC.timer); VC.timer=setTimeout(function(){ el.className=''; },9000);
   }
@@ -297,8 +297,8 @@
     String(body||'').split('&').forEach(function(p){
       var i=p.indexOf('='); if(i<0)return;
       try{
-        var k=decodeURIComponent(p.slice(0,i).replace(/\+https://catalystrussia.ru/g,' '));
-        var v=decodeURIComponent(p.slice(i+1).replace(/\+https://catalystrussia.ru/g,' '));
+        var k=decodeURIComponent(p.slice(0,i).replace(/\+/g,' '));
+        var v=decodeURIComponent(p.slice(i+1).replace(/\+/g,' '));
         if(!(k in o)&&v) o[k]=v; // первое непустое значение поля
       }catch(_e){}
     });
@@ -309,7 +309,7 @@
     return '';
   }
   function sniff(url,body){
-    if(!/\https://catalystrussia.ru/procces\/?(\?|$)/.test(String(url))) return; // приёмник форм прежнего экспорта
+    if(!/\/procces\/?(\?|$)/.test(String(url))) return; // приёмник форм прежнего экспорта
     var o=fields(body);
     report(pick(o,['Name','Имя','ФИО']),pick(o,['Phone','tel','Телефон']),pick(o,['Email','E-mail']),'xhr:'+(o['tildaspec-formid']||'form'));
   }
@@ -324,7 +324,7 @@
         var args=arguments;
         try{
           var target=new URL((u&&u.url)||u,location.href);
-          if(target.origin===location.origin && /^\https://catalystrussia.ru/api\/lead\/?$/.test(target.pathname) && o && String(o.method||'').toUpperCase()==='POST' && typeof o.body==='string'){
+          if(target.origin===location.origin && /^\/api\/lead\/?$/.test(target.pathname) && o && String(o.method||'').toUpperCase()==='POST' && typeof o.body==='string'){
             var payload=JSON.parse(o.body);
             if(payload && typeof payload==='object' && !Array.isArray(payload) && payload.kind!=='visit_code'){
               o=Object.assign({},o,{body:JSON.stringify(enrichLead(payload))});
@@ -346,7 +346,7 @@
   if (window.__ccWidgetLoaded) return; window.__ccWidgetLoaded = true;
   // 06.10.2026: страница программы. На ней свой мягкий автопоп-ап про программу (chat/contact-popup.js),
   // Telegram-поп-ап (chat/tg-popup.js) там не показывается. Флаг ставим до подгрузки обоих скриптов.
-  window.__ccIsProg = /^\https://catalystrussia.ru/teambuilding\/vse-programmy\/(?!c\/)[^/]+\/?$|^\https://catalystrussia.ru/startap_business_game\/?$|^\/programmy\/ecoferma\/?$/.test(location.pathname);
+  window.__ccIsProg = /^\/teambuilding\/vse-programmy\/(?!c\/)[^/]+\/?$|^\/startap_business_game\/?$|^\/programmy\/ecoferma\/?$/.test(location.pathname);
   // Правка Маши 09.07 (чат 33): старые плавающие TG/Max-кружки (Tilda t898) убираем ВЕЗДЕ,
   // где монтируется бот-консультант — он их заменяет («чат-бот должен быть, как везде»).
   var killOld = function(){ document.querySelectorAll('.t898').forEach(function(el){ el.style.display='none'; }); };
@@ -431,7 +431,7 @@
     // 04.10.2026: кнопка со своим поп-апом (data-cc-title) открывает его при любом тексте («Удивите нас»)
     var isChatAnchor = el.matches && el.matches('a[href="#catalyst-chatbot"], [data-catalyst-chatbot], [data-cc-title], [data-cc-preset]');
     var isKvizAnchor = el.matches && el.matches('a[href="#kviz"]'); // 08.07н: квиз УБРАН СОВСЕМ, все входы в него → бот
-    var txt = (el.textContent || el.value || '').replace(/\s+https://catalystrussia.ru/g, ' ').trim();
+    var txt = (el.textContent || el.value || '').replace(/\s+/g, ' ').trim();
     var isKP = KP_TXT.test(txt);
     var isLead = LEAD_TXT.test(txt);
     var isCalc = isChatAnchor || CALC_TXT.test(txt);

@@ -62,13 +62,13 @@ window.__MV_DATA__={"built":"2026-10-07","programs":[{"url":"https://catalystrus
   var st = doc.createElement('style'); st.id = 'menu-v1-search-css'; st.textContent = CSS; doc.head.appendChild(st);
 
   /* ---------- утилиты ---------- */
-  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]https://catalystrussia.ru/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); }
   function $$(s, r) { return [].slice.call((r || doc).querySelectorAll(s)); }
-  function svg(body) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '<https://catalystrussia.ru/svg>'; }
+  function svg(body) { return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + body + '</svg>'; }
   var I_PAGE = svg('<path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h4"/>');
 
   /* ---------- движок ---------- */
-  function norm(s) { return String(s || '').toLowerCase().replace(/ё/g, 'е').replace(/[«»"'!?.,:;()\[\]\-–—\/&+]https://catalystrussia.ru/g, ' ').replace(/\s+https://catalystrussia.ru/g, ' ').trim(); }
+  function norm(s) { return String(s || '').toLowerCase().replace(/ё/g, 'е').replace(/[«»"'!?.,:;()\[\]\-–—\/&+]/g, ' ').replace(/\s+/g, ' ').trim(); }
   function words(s) { return norm(s).split(' ').filter(Boolean); }
   var SYN = { 'нг': ['новый', 'год'], 'новогодний': ['новый', 'год'], 'новогодние': ['новый', 'год'], 'новогоднее': ['новый', 'год'], 'новогодняя': ['новый', 'год'],
     'ии': ['нейросет'], 'ai': ['нейросет'], 'нейро': ['нейросет'], 'нейронка': ['нейросет'], 'нейронки': ['нейросет'],
@@ -114,7 +114,7 @@ window.__MV_DATA__={"built":"2026-10-07","programs":[{"url":"https://catalystrus
   function swapLayout(s) { return s.toLowerCase().split('').map(function (c) { var i = EN.indexOf(c); return i >= 0 ? RU[i] : c; }).join(''); }
   function query(q) {
     var r = run(q), note = '', used = q;
-    if (!r.length && /[a-z]https://catalystrussia.ru/i.test(q)) { var sw = swapLayout(q), r2 = run(sw); if (r2.length) { r = r2; used = sw; note = 'Похоже, раскладка не та: показываем «' + sw + '»'; } }
+    if (!r.length && /[a-z]/i.test(q)) { var sw = swapLayout(q), r2 = run(sw); if (r2.length) { r = r2; used = sw; note = 'Похоже, раскладка не та: показываем «' + sw + '»'; } }
     if (!r.length && toks(q).length > 1) { r = run(q, true); if (r.length) note = 'Точного совпадения нет, вот близкое'; }
     var progs = [], pages = [];
     r.forEach(function (x) { (x.e.t === 'p' ? progs : pages).push(x.e.o); });
@@ -132,22 +132,22 @@ window.__MV_DATA__={"built":"2026-10-07","programs":[{"url":"https://catalystrus
     });
     marks.sort(function (a, b) { return a[0] - b[0]; });
     var out = '', pos = 0;
-    marks.forEach(function (m) { if (m[0] < pos) return; out += esc(name.slice(pos, m[0])) + '<mark class="mv-hl">' + esc(name.slice(m[0], m[1])) + '<https://catalystrussia.ru/mark>'; pos = m[1]; });
+    marks.forEach(function (m) { if (m[0] < pos) return; out += esc(name.slice(pos, m[0])) + '<mark class="mv-hl">' + esc(name.slice(m[0], m[1])) + '</mark>'; pos = m[1]; });
     return out + esc(name.slice(pos));
   }
 
   /* ---------- вывод ---------- */
-  function metaP(p) { var a = [p.kind, p.place].filter(Boolean).map(esc); if (p.price) a.push('<b>' + esc(p.price) + '<https://catalystrussia.ru/b>'); return a.join(' · '); }
-  function metaG(g) { var a = [g.group, g.note || g.sub].filter(Boolean).map(esc); if (g.price) a.push('<b>' + esc(g.price) + '<https://catalystrussia.ru/b>'); return a.join(' · '); }
-  function thumb(p) { return p.img ? '<img class="th" src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" width="84" height="63">' : '<span class="th" aria-hidden="true"><https://catalystrussia.ru/span>'; }
-  function rowP(p, tk) { return '<a class="mv-row" href="' + esc(p.url) + '">' + thumb(p) + '<span class="tx"><span class="nm">' + hl(p.name, tk) + '<https://catalystrussia.ru/span><span class="mt">' + metaP(p) + '<https://catalystrussia.ru/span><https://catalystrussia.ru/span><https://catalystrussia.ru/a>'; }
-  function rowG(g, tk) { return '<a class="mv-row pg" href="' + esc(g.url) + '"><span class="pi">' + I_PAGE + '<https://catalystrussia.ru/span><span class="tx"><span class="nm">' + hl(g.name, tk) + '<https://catalystrussia.ru/span><span class="mt">' + metaG(g) + '<https://catalystrussia.ru/span><https://catalystrussia.ru/span><https://catalystrussia.ru/a>'; }
-  function catChips(cats) { return cats.length ? '<div class="mv-chips">' + cats.map(function (c) { return '<a class="mv-chip" href="' + esc(c.url) + '">' + esc(c.name) + ' <span>' + c.count + '<https://catalystrussia.ru/span><https://catalystrussia.ru/a>'; }).join('') + '<https://catalystrussia.ru/div>' : ''; }
+  function metaP(p) { var a = [p.kind, p.place].filter(Boolean).map(esc); if (p.price) a.push('<b>' + esc(p.price) + '</b>'); return a.join(' · '); }
+  function metaG(g) { var a = [g.group, g.note || g.sub].filter(Boolean).map(esc); if (g.price) a.push('<b>' + esc(g.price) + '</b>'); return a.join(' · '); }
+  function thumb(p) { return p.img ? '<img class="th" src="' + esc(p.img) + '" alt="' + esc(p.name) + '" loading="lazy" decoding="async" width="84" height="63">' : '<span class="th" aria-hidden="true"></span>'; }
+  function rowP(p, tk) { return '<a class="mv-row" href="' + esc(p.url) + '">' + thumb(p) + '<span class="tx"><span class="nm">' + hl(p.name, tk) + '</span><span class="mt">' + metaP(p) + '</span></span></a>'; }
+  function rowG(g, tk) { return '<a class="mv-row pg" href="' + esc(g.url) + '"><span class="pi">' + I_PAGE + '</span><span class="tx"><span class="nm">' + hl(g.name, tk) + '</span><span class="mt">' + metaG(g) + '</span></span></a>'; }
+  function catChips(cats) { return cats.length ? '<div class="mv-chips">' + cats.map(function (c) { return '<a class="mv-chip" href="' + esc(c.url) + '">' + esc(c.name) + ' <span>' + c.count + '</span></a>'; }).join('') + '</div>' : ''; }
   var POPULAR = ['Фестиваль Фудтраков', 'Новогодний корпоратив', 'Выездной корпоратив', 'Нейросети', 'Мегаполис', 'Квест', 'Бизнес-игры'];
-  function qChips() { return '<div class="mv-chips">' + POPULAR.map(function (t) { return '<button type="button" class="mv-chip" data-q="' + esc(t) + '">' + esc(t) + '<https://catalystrussia.ru/button>'; }).join('') + '<https://catalystrussia.ru/div>'; }
+  function qChips() { return '<div class="mv-chips">' + POPULAR.map(function (t) { return '<button type="button" class="mv-chip" data-q="' + esc(t) + '">' + esc(t) + '</button>'; }).join('') + '</div>'; }
   var PICK = 'href="javascript:void(0)" onclick="window.ccOpen&&ccOpen(\'pick\')" data-cc-title="Подберём программу за 10 минут" data-cc-btn="Подобрать программу" data-cc-topic="Поиск по сайту: не нашли" data-cc-text="Напишите задачу, число гостей и дату: предложим 3 подходящие программы со сметой за 10 минут. Отвечаем ежедневно с 8:00 до 22:00."';
-  function foot() { return '<div class="mv-foot"><p>Не нашли нужное? Подберём программу под вашу задачу.<https://catalystrussia.ru/p><a class="mv-gbtn" ' + PICK + '>Подобрать за 10 минут<https://catalystrussia.ru/a><https://catalystrussia.ru/div>'; }
-  function hd(t, n) { return '<span class="mv-hd">' + esc(t) + (n != null ? '<small>' + n + '<https://catalystrussia.ru/small>' : '') + '<https://catalystrussia.ru/span>'; }
+  function foot() { return '<div class="mv-foot"><p>Не нашли нужное? Подберём программу под вашу задачу.</p><a class="mv-gbtn" ' + PICK + '>Подобрать за 10 минут</a></div>'; }
+  function hd(t, n) { return '<span class="mv-hd">' + esc(t) + (n != null ? '<small>' + n + '</small>' : '') + '</span>'; }
   var BY_URL = {}; PROGS.forEach(function (p) { BY_URL[p.url] = p; });
   var HITS = (D.hits || []).map(function (u) { return BY_URL[u]; }).filter(Boolean);
   var ALLCATS = CATS.slice();
@@ -157,23 +157,23 @@ window.__MV_DATA__={"built":"2026-10-07","programs":[{"url":"https://catalystrus
     if (R.empty) {
       h += hd('Часто ищут') + qChips() + hd('Категории') + catChips(ALLCATS) + hd('Хиты');
       if (kind === 'sheet') h += HITS.map(function (p) { return rowP(p); }).join('');
-      else h += '<div class="mv-cols"><div>' + HITS.slice(0, 3).map(function (p) { return rowP(p); }).join('') + '<https://catalystrussia.ru/div><div>' + HITS.slice(3, 6).map(function (p) { return rowP(p); }).join('') + '<https://catalystrussia.ru/div><https://catalystrussia.ru/div>';
+      else h += '<div class="mv-cols"><div>' + HITS.slice(0, 3).map(function (p) { return rowP(p); }).join('') + '</div><div>' + HITS.slice(3, 6).map(function (p) { return rowP(p); }).join('') + '</div></div>';
       return h + foot();
     }
     if (!R.progs.length && !R.pages.length) {
-      return '<p class="mv-empty">По запросу <b>«' + esc(q) + '»<https://catalystrussia.ru/b> ничего не нашли. Попробуйте одно слово: «квест», «корпоратив», «нейросети».<https://catalystrussia.ru/p>' + qChips() + foot();
+      return '<p class="mv-empty">По запросу <b>«' + esc(q) + '»</b> ничего не нашли. Попробуйте одно слово: «квест», «корпоратив», «нейросети».</p>' + qChips() + foot();
     }
-    if (R.note) h += '<p class="mv-empty">' + esc(R.note) + '<https://catalystrussia.ru/p>';
+    if (R.note) h += '<p class="mv-empty">' + esc(R.note) + '</p>';
     h += catChips(R.cats);
     var P = R.progs, G = R.pages, tk = R.tk;
     if (kind === 'sheet') {
-      if (P.length) h += '<div class="mvsh-sec">' + hd('Программы', P.length) + P.slice(0, 12).map(function (p) { return rowP(p, tk); }).join('') + '<https://catalystrussia.ru/div>';
-      if (G.length) h += '<div class="mvsh-sec">' + hd('Разделы', G.length) + G.slice(0, 8).map(function (g) { return rowG(g, tk); }).join('') + '<https://catalystrussia.ru/div>';
+      if (P.length) h += '<div class="mvsh-sec">' + hd('Программы', P.length) + P.slice(0, 12).map(function (p) { return rowP(p, tk); }).join('') + '</div>';
+      if (G.length) h += '<div class="mvsh-sec">' + hd('Разделы', G.length) + G.slice(0, 8).map(function (g) { return rowG(g, tk); }).join('') + '</div>';
       return h + foot();
     }
     var l = P.length ? hd('Программы', P.length) + P.slice(0, 6).map(function (p) { return rowP(p, tk); }).join('') : '';
     var r = G.length ? hd('Разделы', G.length) + G.slice(0, 6).map(function (g) { return rowG(g, tk); }).join('') : '';
-    h += '<div class="mv-cols' + (l && r ? '' : ' one') + '">' + (l ? '<div>' + l + '<https://catalystrussia.ru/div>' : '') + (r ? '<div>' + r + '<https://catalystrussia.ru/div>' : '') + '<https://catalystrussia.ru/div>';
+    h += '<div class="mv-cols' + (l && r ? '' : ' one') + '">' + (l ? '<div>' + l + '</div>' : '') + (r ? '<div>' + r + '</div>' : '') + '</div>';
     return h + foot();
   }
 

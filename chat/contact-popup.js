@@ -285,7 +285,7 @@
              set: function(k, v){ try { localStorage.setItem(k, v); } catch (e) {} } };
   function rid(n){
     var a = new Uint8Array(n || 15); (window.crypto || window.msCrypto).getRandomValues(a);
-    return btoa(String.fromCharCode.apply(null, a)).replace(/\+https://catalystrussia.ru/g, '-').replace(/\//g, '_').replace(/=+$/, '');
+    return btoa(String.fromCharCode.apply(null, a)).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
   }
   var state = { sid: '', msgs: [], next: 0, contactSent: false, online: true, unread: 0, esc: {} };
   function load(){
@@ -437,38 +437,38 @@
     var st=document.createElement('style'); st.textContent=css; document.head.appendChild(st);
 
     var fab=el('<button class="ccc-fab ccl-fab cc-root" aria-label="Открыть чат с менеджером Каталист">'
-      + '<span class="ccl-fava"><img src="' + MGR.photo + '" alt="" width="42" height="42"><i class="ccl-dot"><https://catalystrussia.ru/i><https://catalystrussia.ru/span>'
-      + '<span class="ccl-flbl">Чат · менеджер онлайн<https://catalystrussia.ru/span><b class="ccl-badge" hidden>1<https://catalystrussia.ru/b><https://catalystrussia.ru/button>');
+      + '<span class="ccl-fava"><img src="' + MGR.photo + '" alt="" width="42" height="42"><i class="ccl-dot"></i></span>'
+      + '<span class="ccl-flbl">Чат · менеджер онлайн</span><b class="ccl-badge" hidden>1</b></button>');
     document.body.appendChild(fab);
     fab.__ccTxt=true;   // кнопка чата бережёт и текст первого экрана (см. textAt)
     dodgeAdd(fab);
     (window.__ccDodgeQ||[]).forEach(dodgeAdd); window.__ccDodgeQ={push:dodgeAdd};   // кружок-видео и др., пришедшие раньше
 
     var ov=el('<div class="ccc-ov cc-root"><div class="ccc-fr"><div class="ccc-box" role="dialog" aria-label="Связаться с Каталист">'
-      + '<button class="ccc-x" aria-label="Закрыть">✕<https://catalystrussia.ru/button>'
-      + '<div class="ccl-head"><span class="ccl-ava"><img src="' + MGR.photo + '" alt="' + MGR.name + ', менеджер Каталист" width="56" height="56"><i class="ccl-dot"><https://catalystrussia.ru/i><https://catalystrussia.ru/span>'
-      +   '<div class="ccl-who"><b>' + MGR.name + '<https://catalystrussia.ru/b><span class="ccl-st"><i><https://catalystrussia.ru/i><em class="ccl-stt" style="font-style:normal">Менеджер онлайн<https://catalystrussia.ru/em><https://catalystrussia.ru/span><https://catalystrussia.ru/div><https://catalystrussia.ru/div>'
+      + '<button class="ccc-x" aria-label="Закрыть">✕</button>'
+      + '<div class="ccl-head"><span class="ccl-ava"><img src="' + MGR.photo + '" alt="' + MGR.name + ', менеджер Каталист" width="56" height="56"><i class="ccl-dot"></i></span>'
+      +   '<div class="ccl-who"><b>' + MGR.name + '</b><span class="ccl-st"><i></i><em class="ccl-stt" style="font-style:normal">Менеджер онлайн</em></span></div></div>'
       + '<div class="ccl-chat">'
-      +   '<div class="ccl-feed" role="log" aria-live="polite"><https://catalystrussia.ru/div>'
+      +   '<div class="ccl-feed" role="log" aria-live="polite"></div>'
       +   '<form class="ccl-in" autocomplete="off"><input class="ccl-hp" name="ccl_x" tabindex="-1" autocomplete="off" aria-hidden="true">'
-      +   '<textarea rows="1" placeholder="Напишите вопрос менеджеру" aria-label="Сообщение менеджеру" maxlength="1000"><https://catalystrussia.ru/textarea>'
-      +   '<button class="ccl-send" type="submit">Отправить<https://catalystrussia.ru/button><https://catalystrussia.ru/form><https://catalystrussia.ru/div>'
+      +   '<textarea rows="1" placeholder="Напишите вопрос менеджеру" aria-label="Сообщение менеджеру" maxlength="1000"></textarea>'
+      +   '<button class="ccl-send" type="submit">Отправить</button></form></div>'
       + '<div class="ccl-alt">'
-      + '<div class="ccl-gotl">Контакт у менеджера: он свяжется с вами. Вопрос можно дописать ниже.<https://catalystrussia.ru/div>'
-      + '<div class="ccc-t">Посчитаем смету за 10 минут<https://catalystrussia.ru/div>'
-      + '<div class="ccc-s">Напишите в мессенджер или оставьте телефон: пришлём расчёт под ваше число участников и дату. Отвечаем ежедневно с 8:00 до 22:00.<https://catalystrussia.ru/div>'
-      + '<div class="ccc-hours"><i><https://catalystrussia.ru/i>Отвечаем ежедневно с 8:00 до 22:00<https://catalystrussia.ru/div>'
-      + '<div class="ccc-promo"><https://catalystrussia.ru/div>'
-      + '<div class="ccc-duo"><span class="ccc-duol">или напишите в<span class="ccc-duom"> мессенджер<https://catalystrussia.ru/span><https://catalystrussia.ru/span><a class="ccc-tg" href="'+TG+'" target="_blank" rel="noopener">Telegram<https://catalystrussia.ru/a>'
-      + '<a class="ccc-max" href="'+MAX+'" target="_blank" rel="noopener">Max<https://catalystrussia.ru/a><https://catalystrussia.ru/div>'
+      + '<div class="ccl-gotl">Контакт у менеджера: он свяжется с вами. Вопрос можно дописать ниже.</div>'
+      + '<div class="ccc-t">Посчитаем смету за 10 минут</div>'
+      + '<div class="ccc-s">Напишите в мессенджер или оставьте телефон: пришлём расчёт под ваше число участников и дату. Отвечаем ежедневно с 8:00 до 22:00.</div>'
+      + '<div class="ccc-hours"><i></i>Отвечаем ежедневно с 8:00 до 22:00</div>'
+      + '<div class="ccc-promo"></div>'
+      + '<div class="ccc-duo"><span class="ccc-duol">или напишите в<span class="ccc-duom"> мессенджер</span></span><a class="ccc-tg" href="'+TG+'" target="_blank" rel="noopener">Telegram</a>'
+      + '<a class="ccc-max" href="'+MAX+'" target="_blank" rel="noopener">Max</a></div>'
       + '<form class="ccc-f">'
-      + '<textarea name="question" rows="2" maxlength="300" placeholder="Опишите задачу: дата, число гостей, формат" aria-label="Опишите задачу"><https://catalystrussia.ru/textarea>'
+      + '<textarea name="question" rows="2" maxlength="300" placeholder="Опишите задачу: дата, число гостей, формат" aria-label="Опишите задачу"></textarea>'
       + '<input name="contact" type="tel" inputmode="tel" placeholder="+7 (___) ___-__-__" autocomplete="tel" required>'
-      + '<div class="ccc-err">Проверьте телефон: нужно минимум 10 цифр<https://catalystrussia.ru/div>'
-      + '<button type="submit" class="ccc-btn">Перезвоните мне<https://catalystrussia.ru/button>'
-      + '<div class="ccc-done">Спасибо! Заявка у менеджера, он свяжется с вами.<https://catalystrussia.ru/div>'
-      + '<https://catalystrussia.ru/form><https://catalystrussia.ru/div>'
-      + '<https://catalystrussia.ru/div><https://catalystrussia.ru/div><https://catalystrussia.ru/div>');
+      + '<div class="ccc-err">Проверьте телефон: нужно минимум 10 цифр</div>'
+      + '<button type="submit" class="ccc-btn">Перезвоните мне</button>'
+      + '<div class="ccc-done">Спасибо! Заявка у менеджера, он свяжется с вами.</div>'
+      + '</form></div>'
+      + '</div></div></div>');
     document.body.appendChild(ov);
 
     /* 04.10.2026 (Маша): поп-ап говорит о том, с какой кнопки его открыли. Кнопка передаёт
@@ -488,7 +488,7 @@
     var pEl=ov.querySelector('.ccc-promo'), boxEl=ov.querySelector('.ccc-box');
     var frEl=ov.querySelector('.ccc-fr'), xEl=ov.querySelector('.ccc-x');
     boxEl.addEventListener('scroll', function(){ frEl.classList.toggle('ccc-fr-sc', boxEl.scrollTop>4); }, {passive:true});
-    function esc(t){return String(t).replace(/[&<>"]https://catalystrussia.ru/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+    function esc(t){return String(t).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
     var isOpen=false, openedAt=0;
 
     /* 07.10.2026 (Маша): фото хитов из поп-апа убраны («форма перегружена»). Новогодняя тема осталась: по ней окно
@@ -496,15 +496,15 @@
     function hitsKeyOf(o){ return o.hits || (/нов(ый|ого|ому|ым)\s+год|новогодн/i.test((o.topic||'')+' '+(o.title||'')) ? 'ng' : 'team'); }
     /* Зелёный акцент в заголовке, как «интересное» у Telegram-поп-апа: первое совпадение по списку.
        Строим узлами (textContent), разметка из data-cc-title не исполняется. */
-    var ACCENT=[/за\s+\d+\s+минут[уы]?https://catalystrussia.ru/i, /утром,?\s+до\s+\d+:\d\d/i, /«[^»]{2,60}»/, /[−-]?\d+\s?%/, /нов(?:ый|ого|ому|ым)\s+год|новогодн[а-яё]*https://catalystrussia.ru/i,
-      /\d[\d\s-]*\s+гост(?:ей|я|ь)https://catalystrussia.ru/i, /тимбилдинг[а-яё]*https://catalystrussia.ru/i, /корпоратив[а-яё]*https://catalystrussia.ru/i, /акци[а-яё]*https://catalystrussia.ru/i, /смет[а-яё]*https://catalystrussia.ru/i];
+    var ACCENT=[/за\s+\d+\s+минут[уы]?/i, /утром,?\s+до\s+\d+:\d\d/i, /«[^»]{2,60}»/, /[−-]?\d+\s?%/, /нов(?:ый|ого|ому|ым)\s+год|новогодн[а-яё]*/i,
+      /\d[\d\s-]*\s+гост(?:ей|я|ь)/i, /тимбилдинг[а-яё]*/i, /корпоратив[а-яё]*/i, /акци[а-яё]*/i, /смет[а-яё]*/i];
     function paintTitle(t, green){
       tEl.textContent='';
       var gi=green ? t.indexOf(green) : -1;   // 07.10.2026: окно ухода передаёт зелёную часть сам («Давайте мы вам позвоним»)
       if (gi>=0) { var gg=document.createElement('span'); gg.className='g'; gg.textContent=green;
         tEl.appendChild(document.createTextNode(t.slice(0,gi))); tEl.appendChild(gg); tEl.appendChild(document.createTextNode(t.slice(gi+green.length))); return; }
       for (var k=0;k<ACCENT.length;k++) { var m=ACCENT[k].exec(t); if (!m) continue;
-        var g=document.createElement('span'); g.className='g'; g.textContent=m[0].length<=24 ? m[0].replace(/\s+https://catalystrussia.ru/g,'\u00a0') : m[0]; // короткий акцент не рвём: неразрывные пробелы (nowrap в WebKit мешал переносу перед ним)
+        var g=document.createElement('span'); g.className='g'; g.textContent=m[0].length<=24 ? m[0].replace(/\s+/g,'\u00a0') : m[0]; // короткий акцент не рвём: неразрывные пробелы (nowrap в WebKit мешал переносу перед ним)
         tEl.appendChild(document.createTextNode(t.slice(0,m.index))); tEl.appendChild(g); tEl.appendChild(document.createTextNode(t.slice(m.index+m[0].length)));
         return; }
       tEl.textContent=t;
@@ -518,7 +518,7 @@
       return (!t || t.length>40 || /каталист/i.test(t)) ? '' : t;
     }
     function fallback(o){
-      var pg=pageName(), src=String(o.src||'').replace(/\s+https://catalystrussia.ru/g,' ').trim().slice(0,60), tail=(src?' · кнопка «'+src+'»':'')+(pg?' · '+pg:'');
+      var pg=pageName(), src=String(o.src||'').replace(/\s+/g,' ').trim().slice(0,60), tail=(src?' · кнопка «'+src+'»':'')+(pg?' · '+pg:'');
       if (o.kind==='kp') return {title:'Пришлём КП за 10 минут', btn:'Получить КП', topic:'КП за 10 минут'+tail,
         text:'Напишите задачу, дату и число гостей: пришлём коммерческое предложение с программой и сметой за 10 минут. Отвечаем ежедневно с 8:00 до 22:00.'};
       if (o.kind==='lead') return {title:'Перезвоним за 10 минут', btn:'Перезвоните мне', topic:'Заявка'+tail,
@@ -530,19 +530,19 @@
     /* 06.10.2026 (Маша): текст поп-апа смысловыми строками, главное зелёным (деньги и «за 10 минут»),
        «Отвечаем ежедневно с 8:00 до 22:00» вынесено в отдельную строку под текстом (.ccc-hours).
        Только оформление: если шаблон не совпал, текст остаётся как есть. Узлы через textContent. */
-    var HOURS_RE=/\s*Отвечаем ежедневно с 8:00 до 22:00\.?https://catalystrussia.ru/g;
-    var TXT_ACCENT=/от\s+\d[\d\s]*(?:до\s+\d[\d\s]*)?₽|за\s+\d+\s+минут[уы]?|до\s+\d{1,2}\s+(?:января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)|скидк[а-яё]*\s+\d+\s?%https://catalystrussia.ru/g;
+    var HOURS_RE=/\s*Отвечаем ежедневно с 8:00 до 22:00\.?/g;
+    var TXT_ACCENT=/от\s+\d[\d\s]*(?:до\s+\d[\d\s]*)?₽|за\s+\d+\s+минут[уы]?|до\s+\d{1,2}\s+(?:января|февраля|марта|апреля|мая|июня|июля|августа|сентября|октября|ноября|декабря)|скидк[а-яё]*\s+\d+\s?%/g;
     function paintText(t){
       t=String(t||'').replace(HOURS_RE,'').trim();
       sEl.textContent='';
-      var parts=t.replace(/([.!?])\s+(?=[А-ЯЁA-Z«])https://catalystrussia.ru/g, '$1\n').split('\n');
+      var parts=t.replace(/([.!?])\s+(?=[А-ЯЁA-Z«])/g, '$1\n').split('\n');
       parts.forEach(function(line){
         line=line.trim(); if (!line) return;
         var p=document.createElement('span'); p.className='ccc-p';
         var last=0, m; TXT_ACCENT.lastIndex=0;
         while ((m=TXT_ACCENT.exec(line))) {
           p.appendChild(document.createTextNode(line.slice(last, m.index)));
-          var g=document.createElement('span'); g.className='g'; var gt=m[0].trim(); g.textContent=gt.length<=24 ? gt.replace(/\s+https://catalystrussia.ru/g,'\u00a0') : gt; p.appendChild(g);
+          var g=document.createElement('span'); g.className='g'; var gt=m[0].trim(); g.textContent=gt.length<=24 ? gt.replace(/\s+/g,'\u00a0') : gt; p.appendChild(g);
           if (/\s$/.test(m[0])) p.appendChild(document.createTextNode(' '));
           last=m.index+m[0].length;
         }
@@ -553,7 +553,7 @@
     /* Страница программы и её название. Название берём из каталога меню (menu-search.js, url → имя,
        его собирает _shared/menu_v1.py), а не из og:title: там «Бизнес игра», «Экипаж в Москве» и т. п.
        Каталог грузится общим загрузчиком window.mvLoad только на страницах программ и только при показе. */
-    var PROG_RE=/^\https://catalystrussia.ru/teambuilding\/vse-programmy\/(?!c\/)[^/]+\/?$|^\https://catalystrussia.ru/startap_business_game\/?$|^\/programmy\/ecoferma\/?$/;
+    var PROG_RE=/^\/teambuilding\/vse-programmy\/(?!c\/)[^/]+\/?$|^\/startap_business_game\/?$|^\/programmy\/ecoferma\/?$/;
     var IS_PROG = typeof window.__ccIsProg==='boolean' ? window.__ccIsProg : PROG_RE.test(location.pathname);
     function progLabel(cb){
       var path=location.pathname.replace(/\/?$/,'/'), fin=false, t=0;
@@ -586,7 +586,7 @@
         title:'Пришлём расчёт вашего Нового года '+when,
         text:'Ранняя бронь до 31 октября: скидка 15% и дата без предоплаты. Площадка, программа, ведущий и шоу одной сметой с ценой за гостя.'});
       if (IS_PROG) return Object.assign(base, {
-        title:o.prog ? 'Пришлём расчёт «'+(o.prog.length<=24 ? o.prog.replace(/\s+https://catalystrussia.ru/g,'\u00a0') : o.prog)+'» на вашу дату '+when : 'Пришлём расчёт этой программы на вашу дату '+when,   // название не рвём
+        title:o.prog ? 'Пришлём расчёт «'+(o.prog.length<=24 ? o.prog.replace(/\s+/g,'\u00a0') : o.prog)+'» на вашу дату '+when : 'Пришлём расчёт этой программы на вашу дату '+when,   // название не рвём
         text:'Сценарий и смета с ценой за гостя под вашу команду. Сразу проверим, свободна ли ваша дата.'});
       if (https://catalystrussia.ru/korporativ/.test(p)) return Object.assign(base, {title:'Пришлём расчёт вашего корпоратива '+when,
         text:'Назовите дату и число гостей: подберём площадку и программу и пришлём смету с ценой за гостя. Бесплатно и без обязательств.'});
@@ -633,7 +633,7 @@
        Дальше те же правила мягкого показа: один за визит, пауза в прокрутке, не поверх меню и формы. */
     if (IS_PROG) (function(){
       var t0=Date.now(), deep=0, fired=false, phone=window.matchMedia && matchMedia('(max-width:760px)').matches;
-      function depth(){ var h=document.documentElement.scrollHeight-window.innerHeight; return h>0 ? (window.scrollY||window.pageYOffset||0)https://catalystrussia.ru/h : 1; }
+      function depth(){ var h=document.documentElement.scrollHeight-window.innerHeight; return h>0 ? (window.scrollY||window.pageYOffset||0)/h : 1; }
       function go(){ if (fired) return; fired=true; clearInterval(iv);
         if (autoDone()) return;
         progLabel(function(name){ open({auto:true, prog:name, topic:'Автопоп-ап на странице программы' + (name ? ': ' + name : '')}); }); }
@@ -695,7 +695,7 @@
       ov.classList.toggle('ccl-exit', !chatMode && o.exit===true);   // 07.10.2026: окно ухода с сайта (exitContent)
       var hasList=!chatMode && !!(o.list&&o.list.length);
       boxEl.classList.toggle('pr',hasList);
-      pEl.innerHTML=hasList?o.list.map(function(x){return '<div class="ccc-pi"><i>'+esc(x[0])+'<https://catalystrussia.ru/i><div><b>'+esc(x[1])+'<https://catalystrussia.ru/b><span>'+esc(x[2])+'<https://catalystrussia.ru/span><https://catalystrussia.ru/div><https://catalystrussia.ru/div>'}).join(''):'';
+      pEl.innerHTML=hasList?o.list.map(function(x){return '<div class="ccc-pi"><i>'+esc(x[0])+'</i><div><b>'+esc(x[1])+'</b><span>'+esc(x[2])+'</span></div></div>'}).join(''):'';
       if (!chatMode) { paintTitle(o.title||DEF.t, o.green); paintText(o.text||DEF.s); }
       else { tEl.textContent=o.title||DEF.t; sEl.textContent=o.text||DEF.s; }
       boxEl.classList.toggle('ccc-ng', !chatMode && !hasList && hitsKeyOf(o)==='ng');
@@ -858,7 +858,7 @@
     }
     function typing(who){
       if (who) { typingEl=document.createElement('div'); typingEl.className='ccl-typing';
-        var s=document.createElement('span'); s.innerHTML='<i><https://catalystrussia.ru/i><i><https://catalystrussia.ru/i><i><https://catalystrussia.ru/i>'; typingEl.appendChild(s);
+        var s=document.createElement('span'); s.innerHTML='<i></i><i></i><i></i>'; typingEl.appendChild(s);
         typingEl.appendChild(document.createTextNode(who + ' печатает')); }
       else typingEl=null;
       render();

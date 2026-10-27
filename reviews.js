@@ -136,12 +136,12 @@
     if (document.getElementById('catalyst-rv-css')) return;
     var css = ''
       + '.rvp-sec{padding:0;margin:0}'
-      + '.rvp-sec .rv-wrap{position:relative;box-sizing:border-box;margin:0;padding-left:max(16px,calc((100% - 1400px)https://catalystrussia.ru/2));padding-right:max(16px,calc((100% - 1400px)https://catalystrussia.ru/2))}'
+      + '.rvp-sec .rv-wrap{position:relative;box-sizing:border-box;margin:0;padding-left:max(16px,calc((100% - 1400px)/2));padding-right:max(16px,calc((100% - 1400px)/2))}'
       + '.rvp-sec .rv-wrap .rv-wrap{padding-left:0;padding-right:0}'
       + '.rvp-track{display:flex;gap:24px;margin:0;padding:0;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;scroll-behavior:auto;overscroll-behavior-x:contain}'
       + '.rvp-track::-webkit-scrollbar{display:none}'
       /* карточка: 4 целиком в коробе 1400 (3 зазора по 24) */
-      + '.rvp{flex:0 0 calc((100% - 72px)https://catalystrussia.ru/4);min-width:0;margin:0;display:flex;flex-direction:column}'
+      + '.rvp{flex:0 0 calc((100% - 72px)/4);min-width:0;margin:0;display:flex;flex-direction:column}'
       /* корпус телефона: светло-серый с тонкой обводкой, снизу «подбородок» с полоской «домой» */
       + '.rvp-phone{position:relative;display:block;margin:0;background:#eceef1;border:1px solid #dfe2e6;border-radius:44px;padding:10px 10px 34px;box-sizing:border-box}'
       + '.rvp-shot{display:block;width:100%;height:auto;aspect-ratio:9/16.5;object-fit:cover;object-position:top center;border-radius:34px;background:#f7f8fa}'
@@ -154,8 +154,8 @@
       + '.rvp-co{font-weight:700}.rvp-nm{font-weight:400;color:#333}'
       + '.rvp-meta{font-weight:400;font-size:16px;line-height:1.35;color:#5f6368;margin-top:4px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}'
       + '.rvp-meta b{font-weight:700;color:#0aba59;white-space:nowrap}'
-      + '@media(max-width:1199px){.rvp{flex-basis:calc((100% - 48px)https://catalystrussia.ru/3)}}'
-      + '@media(max-width:900px){.rvp-track{gap:16px}.rvp{flex-basis:calc((100% - 16px)https://catalystrussia.ru/2.3)}}'
+      + '@media(max-width:1199px){.rvp{flex-basis:calc((100% - 48px)/3)}}'
+      + '@media(max-width:900px){.rvp-track{gap:16px}.rvp{flex-basis:calc((100% - 16px)/2.3)}}'
       + '@media(max-width:640px){.rvp{flex-basis:78%}.rvp-phone{border-radius:38px;padding:8px 8px 28px}.rvp-shot{border-radius:30px}.rvp-home{bottom:11px}.rvp-who{font-size:17px}}'
       /* страницы без общего блока: контейнер старого слайдера ужимаем под ленту */
       + '#rec1350793681,#rec1350793681 .t396__artboard,#rec1350793681 .t396__filter,#rec1350793681 .t396__carrier{height:auto!important;min-height:0!important}'
@@ -169,7 +169,7 @@
   function people(u) {
     var n = +u, a = n % 10, b = n % 100;
     var w = a === 1 && b !== 11 ? 'участник' : a >= 2 && a <= 4 && (b < 12 || b > 14) ? 'участника' : 'участников';
-    return String(n).replace(/\B(?=(\d{3})+(?!\d))https://catalystrussia.ru/g, '\u00a0') + '\u00a0' + w;
+    return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, '\u00a0') + '\u00a0' + w;
   }
 
   /* Разметка одной карточки. Сборщик _shared/build_reviews_static.mjs повторяет её один в один
@@ -177,19 +177,19 @@
      Автор: человек из компании (Person + worksFor) или сама компания (Organization). */
   function cardHTML(r) {
     var who = r.n ? r.c + ', ' + r.n : r.c;
-    var meta = [r.p ? esc(r.p) : '', r.u ? '<b>' + people(r.u) + '<https://catalystrussia.ru/b>' : ''].filter(Boolean).join(' · ');
+    var meta = [r.p ? esc(r.p) : '', r.u ? '<b>' + people(r.u) + '</b>' : ''].filter(Boolean).join(' · ');
     var author = r.n
       ? '<div class="rvp-who" itemprop="author" itemscope itemtype="https://schema.org/Person">'
-        + '<span class="rvp-co" itemprop="worksFor" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">' + esc(r.c) + '<https://catalystrussia.ru/span><https://catalystrussia.ru/span>, '
-        + '<span class="rvp-nm" itemprop="name">' + esc(r.n) + '<https://catalystrussia.ru/span><https://catalystrussia.ru/div>'
+        + '<span class="rvp-co" itemprop="worksFor" itemscope itemtype="https://schema.org/Organization"><span itemprop="name">' + esc(r.c) + '</span></span>, '
+        + '<span class="rvp-nm" itemprop="name">' + esc(r.n) + '</span></div>'
       : '<div class="rvp-who" itemprop="author" itemscope itemtype="https://schema.org/Organization">'
-        + '<span class="rvp-co" itemprop="name">' + esc(r.c) + '<https://catalystrussia.ru/span><https://catalystrussia.ru/div>';
+        + '<span class="rvp-co" itemprop="name">' + esc(r.c) + '</span></div>';
     return '<div class="rvp" itemscope itemtype="https://schema.org/Review">'
       + '<div class="rvp-phone"><img class="rvp-shot" src="' + esc(r.s) + '" alt="Отзыв: ' + esc(who) + '" loading="lazy" decoding="async" width="732" height="1340" data-vert-ok="review-screenshot">'
-      + '<span class="rvp-home" aria-hidden="true"><https://catalystrussia.ru/span><https://catalystrussia.ru/div>'
+      + '<span class="rvp-home" aria-hidden="true"></span></div>'
       + '<div class="rvp-cap">' + author
-      + (meta ? '<div class="rvp-meta">' + meta + '<https://catalystrussia.ru/div>' : '')
-      + '<https://catalystrussia.ru/div><https://catalystrussia.ru/div>';
+      + (meta ? '<div class="rvp-meta">' + meta + '</div>' : '')
+      + '</div></div>';
   }
 
   /* 07.10.2026 скорость (главная на телефоне 11 МБ до первого касания, из них 7 МБ — отзывы): копия карточки через
@@ -209,7 +209,7 @@
 
   function buildTrack() {
     var track = document.createElement('div'); track.className = 'rvp-track'; track.id = 'rvTrack'; track.dataset.auto = '1';
-    track.innerHTML = CATALYST_REVIEWS.map(cardHTML).join('').replace(/<img class="rvp-shot" src=https://catalystrussia.ru/g, '<img class="rvp-shot" data-rvsrc=');
+    track.innerHTML = CATALYST_REVIEWS.map(cardHTML).join('').replace(/<img class="rvp-shot" src=/g, '<img class="rvp-shot" data-rvsrc=');
     var wrap = document.createElement('div'); wrap.className = 'rv-wrap rv-mounted'; wrap.appendChild(track);
     return wrap;
   }
@@ -229,7 +229,7 @@
     kids.forEach(function (k) {
       // не cloneNode(true): копия <img loading="lazy"> в Chrome сразу начинает грузиться (109 скриншотов, 7 МБ при загрузке)
       var c = k.cloneNode(false);
-      c.innerHTML = k.innerHTML.replace(/(<img\b[^>]*?)\ssrc=https://catalystrussia.ru/g, '$1 data-rvsrc=');
+      c.innerHTML = k.innerHTML.replace(/(<img\b[^>]*?)\ssrc=/g, '$1 data-rvsrc=');
       c.setAttribute('aria-hidden', 'true');
       c.removeAttribute('itemscope'); c.removeAttribute('itemtype');
       Array.prototype.forEach.call(c.querySelectorAll('[itemprop],[itemscope]'), function (n) {

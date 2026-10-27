@@ -46,15 +46,15 @@
     try { sessionStorage.setItem(SS_KEY, '1'); } catch (e) {}
     window.__ccExitShown = true; // футболка уступит
     var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
-    var svg = '<svg viewBox="0 0 24 24"><path d="M9.8 15.6l-.4 4c.5 0 .7-.2 1-.5l2.4-2.3 5 3.6c.9.5 1.6.3 1.8-.8l3.3-15.4c.3-1.3-.5-1.9-1.4-1.6L1.6 9.9c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5L18 5.4c.5-.3 1-.2.6.2"/><https://catalystrussia.ru/svg>';
-    var posts = POSTS.map(function (p) { return '<div class="cctg-c"><img src="' + IMG + p.img + '" alt=""><div class="t">' + p.t + '<https://catalystrussia.ru/div><https://catalystrussia.ru/div>'; }).join('');
+    var svg = '<svg viewBox="0 0 24 24"><path d="M9.8 15.6l-.4 4c.5 0 .7-.2 1-.5l2.4-2.3 5 3.6c.9.5 1.6.3 1.8-.8l3.3-15.4c.3-1.3-.5-1.9-1.4-1.6L1.6 9.9c-1.3.5-1.3 1.2-.2 1.5l4.9 1.5L18 5.4c.5-.3 1-.2.6.2"/></svg>';
+    var posts = POSTS.map(function (p) { return '<div class="cctg-c"><img src="' + IMG + p.img + '" alt=""><div class="t">' + p.t + '</div></div>'; }).join('');
     var ov = document.createElement('div'); ov.className = 'cctg-ov';
-    ov.innerHTML = '<div class="cctg"><button class="cctg-x" aria-label="Закрыть">✕<https://catalystrussia.ru/button>'
-      + '<div class="cctg-hd"><div class="cctg-lg">' + svg + '<https://catalystrussia.ru/div><div class="cctg-ch">Каталист<small>@catalyst_agency · Telegram-канал<https://catalystrussia.ru/small><https://catalystrussia.ru/div><https://catalystrussia.ru/div>'
-      + '<div class="cctg-h">Всё самое <span class="g">интересное<https://catalystrussia.ru/span> читайте в нашем Telegram<https://catalystrussia.ru/div>'
-      + '<div class="cctg-s">Спецпредложения, скидки, новинки и закулисье наших ивентов.<https://catalystrussia.ru/div>'
-      + '<div class="cctg-row">' + posts + '<https://catalystrussia.ru/div>'
-      + '<a class="cctg-btn" href="' + CH + '" target="_blank" rel="noopener">Перейти в канал<https://catalystrussia.ru/a><https://catalystrussia.ru/div>';
+    ov.innerHTML = '<div class="cctg"><button class="cctg-x" aria-label="Закрыть">✕</button>'
+      + '<div class="cctg-hd"><div class="cctg-lg">' + svg + '</div><div class="cctg-ch">Каталист<small>@catalyst_agency · Telegram-канал</small></div></div>'
+      + '<div class="cctg-h">Всё самое <span class="g">интересное</span> читайте в нашем Telegram</div>'
+      + '<div class="cctg-s">Спецпредложения, скидки, новинки и закулисье наших ивентов.</div>'
+      + '<div class="cctg-row">' + posts + '</div>'
+      + '<a class="cctg-btn" href="' + CH + '" target="_blank" rel="noopener">Перейти в канал</a></div>';
     document.body.appendChild(ov);
     requestAnimationFrame(function () { ov.classList.add('on'); });
     function close() { try { localStorage.setItem(LS_KEY, Date.now()); } catch (e) {} ov.classList.remove('on'); setTimeout(function () { ov.remove(); }, 250); }
