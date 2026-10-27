@@ -14,7 +14,7 @@
   if (!FORCE) return; // 07.10.2026: сам не показывается, только просмотр по ?tg=1
 
   var CH = 'https://t.me/catalyst_agency';
-  var IMG = 'https://catalystrussia.ru/slides/';
+  var IMG = '/catalyst-home-2026-10-27/slides/';
   var POSTS = [
     { img: 'foodtrucks-hover.webp', t: '🎪 Фестиваль Фудтраков' },
     { img: 'bashnya-1.webp',        t: '🆕 WOW Башня, новинка' },

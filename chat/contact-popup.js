@@ -1,6 +1,6 @@
 /* Каталист · поп-ап «Связаться» + чат «Менеджер онлайн» (05.10.2026, вариант V6 «окно над кнопкой»).
    Кнопка справа внизу открывает чат: посетитель пишет здесь, сообщение сразу уходит менеджеру
-   в Telegram, ответ менеджера появляется в этом окне (POST/GET https://catalystrussia.ru/api/chat-live/). На простые вопросы
+   в Telegram, ответ менеджера появляется в этом окне (POST/GET /api/chat-live/). На простые вопросы
    сразу отвечает ИИ-помощник по базе сайта, менеджер видит и его ответ.
    Кнопки страницы («Рассчитать стоимость», data-cc-*, «Наши акции») открывают поп-ап заявки.
    Все тексты сообщений вставляются через textContent: разметку из сообщений браузер не исполнит.
@@ -21,10 +21,10 @@
 
   var TG = 'https://telegram.me/irek_stn';
   var MAX = 'https://max.ru/u/f9LHodD0cOK1eImavMfYexq4xuG8dMYMe072N-qyTBojv1QekVoEpM0Me9A';
-  var LEAD_URL = 'https://catalystrussia.ru/api/lead/';
+  var LEAD_URL = '/api/lead/';
 
   /* --- чат --- */
-  var LIVE_URL = 'https://catalystrussia.ru/api/chat-live/';
+  var LIVE_URL = '/api/chat-live/';
   var MGR = { name: 'Влад', photo: '/catalyst-home-2026-10-27/img/team/manager.webp' };
   var ASK = 'Оставьте, пожалуйста, контакт, чтобы мы знали, куда ответить.';   // 06.10.2026 (Маша): контакт после первого вопроса
   var LS_SID = 'ccl_sid', LS_HIST = 'ccl_hist';
@@ -378,7 +378,7 @@
       if ((mq || w.__ccAll) && !w.hidden && !document.documentElement.classList.contains('ccl-open') && !(w.closest && w.closest('.ccl-open'))) {
         if (getComputedStyle(w).position!=='fixed') return;   // стили ещё не применились (WebKit, пока грузятся CSS страницы): проверим позже
         var r=w.getBoundingClientRect(), m=getComputedStyle(w).transform, dx=0;
-        if (m && m!=='none') { var mm=m.match(https://catalystrussia.ru/matrix\(([^)]+)\)/); if (mm) dx=parseFloat(mm[1].split(',')[4])||0; }
+        if (m && m!=='none') { var mm=m.match(/matrix\(([^)]+)\)/); if (mm) dx=parseFloat(mm[1].split(',')[4])||0; }
         var L=r.left-dx, T=r.top, W=r.width, H=r.height, R=L+W;
         if (w.__ccTxt) { if (w.classList.contains('ccl-mini')) { W=w.__ccFullW||W; L=R-W; } else w.__ccFullW=W; }   // считаем по полной пилюле
         w.__ccSide = w.__ccSide || ((L + W/2) > innerWidth/2 ? 'r' : 'l');
@@ -512,7 +512,7 @@
     /* Кнопка без своих data-cc-*: общий «Посчитаем смету за 10 минут» не показываем (правило Маши
        04.10.2026), собираем заголовок и тему из того, что нажали, и из названия страницы. */
     function pageName(){
-      var p=location.pathname; if (p==='/'||p==='https://catalystrussia.ru/index.html') return '';
+      var p=location.pathname; if (p==='/'||p==='/index.html') return '';
       var og=document.querySelector('meta[property="og:title"]');
       var t=((og&&og.content)||document.title||'').replace(/\s*[—|·:].*$/,'').replace(/^🔥\s*/,'').trim();
       return (!t || t.length>40 || /каталист/i.test(t)) ? '' : t;
@@ -581,14 +581,14 @@
       var p=location.pathname.toLowerCase(), when=state.online ? 'за 30 минут' : 'утром, до 9:00';
       var base={btn:'Получить расчёт', topic:(o.topic||'Автопоп-ап') + ' · ' + (p||'/'), hits:'team'};
       var pick='Назовите дату и число гостей: подберём 3 программы из 50+ авторских и пришлём смету с ценой за гостя. Бесплатно и без обязательств.';
-      if (p==='/'||p==='https://catalystrussia.ru/index.html') return Object.assign(base, {title:'Пришлём расчёт тимбилдинга под вашу команду '+when, text:pick});
-      if (https://catalystrussia.ru/novogod|novyi-god|novyj-god|new-year|zimn/.test(p)) return Object.assign(base, {hits:'ng',
+      if (p==='/'||p==='/index.html') return Object.assign(base, {title:'Пришлём расчёт тимбилдинга под вашу команду '+when, text:pick});
+      if (/novogod|novyi-god|novyj-god|new-year|zimn/.test(p)) return Object.assign(base, {hits:'ng',
         title:'Пришлём расчёт вашего Нового года '+when,
         text:'Ранняя бронь до 31 октября: скидка 15% и дата без предоплаты. Площадка, программа, ведущий и шоу одной сметой с ценой за гостя.'});
       if (IS_PROG) return Object.assign(base, {
         title:o.prog ? 'Пришлём расчёт «'+(o.prog.length<=24 ? o.prog.replace(/\s+/g,'\u00a0') : o.prog)+'» на вашу дату '+when : 'Пришлём расчёт этой программы на вашу дату '+when,   // название не рвём
         text:'Сценарий и смета с ценой за гостя под вашу команду. Сразу проверим, свободна ли ваша дата.'});
-      if (https://catalystrussia.ru/korporativ/.test(p)) return Object.assign(base, {title:'Пришлём расчёт вашего корпоратива '+when,
+      if (/korporativ/.test(p)) return Object.assign(base, {title:'Пришлём расчёт вашего корпоратива '+when,
         text:'Назовите дату и число гостей: подберём площадку и программу и пришлём смету с ценой за гостя. Бесплатно и без обязательств.'});
       return Object.assign(base, {title:'Пришлём расчёт вашего праздника '+when, text:pick});
     }
@@ -889,7 +889,7 @@
     }
     function hasContact(t){ t=String(t||''); return t.replace(/\D/g,'').length>=10 || /(^|\s)@[A-Za-z][A-Za-z0-9_]{4,31}/.test(t) || /[\w.+-]+@[\w-]+\.[\w.-]+/.test(t); }
 
-    /* ---------- доставка: https://catalystrussia.ru/api/chat-live/, сообщения уходят строго по одному ---------- */
+    /* ---------- доставка: /api/chat-live/, сообщения уходят строго по одному ---------- */
     function clientId(){ return window.__cclCid || ''; }
     try { if (typeof window.ym==='function') window.ym(91307646,'getClientID',function(id){ window.__cclCid=id||''; }); } catch (e) {}
     function utm(){ try{ var raw=localStorage.getItem('_utm_data'); if(!raw) return null; var d=JSON.parse(raw); return (d&&typeof d==='object')?d:null; }catch(e){ return null; } }

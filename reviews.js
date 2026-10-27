@@ -7,7 +7,7 @@
        python3 _shared/sync_reviews.py           (общий блок на все страницы)
    В браузере скрипт только оживляет готовую ленту: автопрокрутка влево, пауза, стрелки.
    Если на странице блока нет (старый слайдер #rec1350793681, otzyv-галерея, пустой #rvMount), строит ленту сам.
-   05.10.2026: 109 отзывов (было 51): добавлены все скриншоты со страницы https://catalystrussia.ru/reviews/ с её подписями.
+   05.10.2026: 109 отзывов (было 51): добавлены все скриншоты со страницы /reviews/ с её подписями.
    06.10.2026: подписи разложены по полям (компания, имя, программа, участники), даты из данных убраны. */
 (function () {
   'use strict';
@@ -309,7 +309,7 @@
       if (sld) { host = sld; mode = 'slider'; }
     }
     if (!host) {
-      var otzImg = document.querySelector('img[src*="https://catalystrussia.ru/img/reviews/otzyv-"]:not(.rvp-shot)');
+      var otzImg = document.querySelector('img[src*="/catalyst-home-2026-10-27/img/reviews/otzyv-"]:not(.rvp-shot)');
       if (otzImg) {
         var cont = otzImg.closest('.rv-track') || otzImg.closest('.rv-wrap') || otzImg.closest('[class*="rv-"]');
         if (cont) { host = cont; mode = 'otzyv'; }

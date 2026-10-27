@@ -1,6 +1,6 @@
 // Перехват заявок с форм сайта -> lead-bot (Telegram менеджерам + AmoCRM). Не ломает UX Tilda.
 (function(){
-  var ENDPOINT='https://catalystrussia.ru/api/lead/';  // first-party same-origin (своя функция-приёмник заявок; слэш = trailingSlash-канон, как у чат-виджета)
+  var ENDPOINT='/api/lead/';  // first-party same-origin (своя функция-приёмник заявок; слэш = trailingSlash-канон, как у чат-виджета)
   function val(form,names){for(var i=0;i<names.length;i++){var el=form.querySelector('[name="'+names[i]+'"]');if(el&&el.value&&el.value.trim())return el.value.trim();}return '';}
   function program(){
     // из <title> или og:title — "WOW Пицца — ..." -> "WOW Пицца"
@@ -120,7 +120,7 @@
   /* === Код визита для Telegram и Max (22.10.2026) ===
      82% обращений с сайта уходят в мессенджеры, и сделка в amoCRM оставалась без источника.
      При клике по личному Telegram или Max посетитель получает код из 4 цифр (один на визит,
-     sessionStorage), код попадает в первое сообщение, а сайт один раз присылает на https://catalystrussia.ru/api/lead/
+     sessionStorage), код попадает в первое сообщение, а сайт один раз присылает на /api/lead/
      ClientID Метрики и метки визита с признаком kind:'visit_code' (это не заявка: сделки и
      уведомления менеджерам нет). Менеджер вставляет код в поле сделки «Код с сайта», сервер
      по коду заполняет _ym_uid, utm_*, yclid, referrer (api/visit-code-match.cjs).
@@ -285,7 +285,7 @@
 
   /* Второй путь — главный. Формы прежнего экспорта (js-form-proccess) отправляются XHR-ом на
      forms.tildaapi.com/procces/ и НЕ дают события submit: слушатель выше их не видел вовсе.
-     Улика (живой прогон 02.08.2026, форма 639747257 на https://catalystrussia.ru/teambuilding/vse-programmy/formula-1/):
+     Улика (живой прогон 02.08.2026, форма 639747257 на /teambuilding/vse-programmy/formula-1/):
      событий submit — ноль, XHR POST с Phone — есть; в Метрике цель form_proposal 0 достижений
      при 1252 визитах за 15 дней. Поэтому ловим саму отправку данных. */
   function fields(body){
@@ -362,7 +362,7 @@
     }
     if (!document.querySelector('link[data-ccmf]')) {
       var mf = document.createElement('link');
-      mf.rel = 'stylesheet'; mf.href = '/catalyst-home-2026-10-27/mobile-fixes.css?v=00bb4940'; mf.setAttribute('data-ccmf','1');
+      mf.rel = 'stylesheet'; mf.href = '/mobile-fixes.css?v=00bb4940'; mf.setAttribute('data-ccmf','1');
       document.head.appendChild(mf);
     }
   }
@@ -373,7 +373,7 @@
   function late(){
     if (lateDone) return; lateDone = true;
     // Маша 28.07: чат-бота ПОКА убрали (переусложнили). Вместо него — простой контакт-поп-ап
-    // (плавающая кнопка «Связаться» → форма телефон/Telegram → https://catalystrussia.ru/api/lead/). consultant.js НЕ грузим.
+    // (плавающая кнопка «Связаться» → форма телефон/Telegram → /api/lead/). consultant.js НЕ грузим.
     if (!document.querySelector('script[data-ccc]')) {
       var s = document.createElement('script');
       s.src = '/catalyst-home-2026-10-27/chat/contact-popup.js?v=07a7e853'; s.setAttribute('data-ccc','1'); s.defer = true;
@@ -390,7 +390,7 @@
     // Единый блок отзывов (Маша 27.07): reviews.js унифицирует старый Tilda-слайдер и otzyv-галерею
     if (!document.querySelector('script[data-crv]')) {
       var rv = document.createElement('script');
-      rv.src = '/catalyst-home-2026-10-27/reviews.js?v=c9e9635a'; rv.setAttribute('data-crv','1'); rv.defer = true;
+      rv.src = '/reviews.js?v=c9e9635a'; rv.setAttribute('data-crv','1'); rv.defer = true;
       document.body.appendChild(rv);
     }
   }
